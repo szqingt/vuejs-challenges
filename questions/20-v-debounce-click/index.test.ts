@@ -9,6 +9,12 @@ async function triggerClick(target: DOMWrapper<HTMLButtonElement>, times = 1) {
     await target.trigger("click")
 }
 
+function delay(timeout: number) {
+  return new Promise((resolve) => {
+    setTimeout(resolve, timeout)
+  })
+}
+
 describe("v-debounce-click", () => {
   it("should work", async() => {
     const result: string[] = []
@@ -17,6 +23,7 @@ describe("v-debounce-click", () => {
     })
     const wrapper = mount(App)
     await triggerClick(wrapper.find("button"), 2)
+    await delay(200)
     expect(JSON.stringify(result)).toBe("[\"Only triggered once when clicked many times quickly\"]")
   })
 })
